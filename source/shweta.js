@@ -20,9 +20,7 @@ const micButtonSelector = {
 const checkIsUnmuted = (windowType) => {
   const micBtn = document.querySelector(micButtonSelector[windowType]);
   if (micBtn) {
-    const unmuted = micBtn.getAttribute("data-is-muted") === "false";
-    console.debug(unmuted ? "unmuted" : "muted");
-    return unmuted;
+    return micBtn.getAttribute("data-is-muted") === "false";
   } else {
     console.error("Cannot find mic button");
     return;
@@ -64,22 +62,20 @@ const setupStylesheet = () => {
 const showWarningBorders = () => {
   setupStylesheet();
   const key = setInterval(() => {
-    const target = document.querySelector(
-      "#ow3 > div.T4LgNb > div > div:nth-child(8) > div.crqnQb > div.loWbp > div.zWfAib.Z319Jd.n9oEIb.QhPhw.a1pVef"
-    );
-    if (!target) {
-      if (returnButtonPresent) clearInterval(key);
-      return;
-    }
-    if (checkIsUnmuted("main")) {
-      if (!target.classList.contains("warning-border"))
-        target.classList.add("warning-border");
-    } else {
-      target.classList.remove("warning-border");
+    const target = document.querySelector("#ow3 > div:nth-child(1)");
+    switch (checkIsUnmuted("main")) {
+      case true:
+        if (!target.classList.contains("warning-border"))
+          target.classList.add("warning-border");
+        break;
+      case false:
+        target.classList.remove("warning-border");
+        break;
+      default:
+        if (returnButtonPresent()) clearInterval(key);
     }
   }, 500);
 };
-
 const returnButtonPresent = () => {
   return (
     document.querySelector(
@@ -87,7 +83,6 @@ const returnButtonPresent = () => {
     ) !== null
   );
 };
-
 const waitForMainWindow = (cb) => {
   const key = setInterval(() => {
     const windowType = checkWindow();
@@ -98,9 +93,9 @@ const waitForMainWindow = (cb) => {
     }
   }, 1000);
 };
-
 const main = async () => {
   initiallyMuteMic();
   waitForMainWindow(showWarningBorders);
 };
+
 window.onload = main;

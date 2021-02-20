@@ -20,7 +20,9 @@ const micButtonSelector = {
 const checkIsUnmuted = (windowType) => {
   const micBtn = document.querySelector(micButtonSelector[windowType]);
   if (micBtn) {
-    return micBtn.getAttribute("data-is-muted") === "false";
+    const unmuted = micBtn.getAttribute("data-is-muted") === "false";
+    console.debug(unmuted ? "unmuted" : "muted");
+    return unmuted;
   } else {
     console.error("Cannot find mic button");
     return;
@@ -41,8 +43,64 @@ const initiallyMuteMic = () => {
   }, 1000);
 };
 
-const main = async () => {
-  initiallyMuteMic();
+const setupStylesheet = () => {
+  const head = document.head || document.getElementsByTagName("head")[0];
+  const style = document.createElement("style");
+  const css = `.warning-border {
+      border: 7px solid;
+      border-image-slice: 1;
+      border-image-source: linear-gradient(to right, #f85032, #e73827);
+  }`;
+  style.type = "text/css";
+  if (style.styleSheet) {
+    //   FOR IE8 OR BELOW
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+  head.appendChild(style);
 };
 
+const showWarningBorders = () => {
+  setupStylesheet();
+  const key = setInterval(() => {
+    const target = document.querySelector(
+      "#ow3 > div.T4LgNb > div > div:nth-child(8) > div.crqnQb > div.loWbp > div.zWfAib.Z319Jd.n9oEIb.QhPhw.a1pVef"
+    );
+    if (!target) {
+      if (returnButtonPresent) clearInterval(key);
+      return;
+    }
+    if (checkIsUnmuted("main")) {
+      if (!target.classList.contains("warning-border"))
+        target.classList.add("warning-border");
+    } else {
+      target.classList.remove("warning-border");
+    }
+  }, 500);
+};
+
+const returnButtonPresent = () => {
+  return (
+    document.querySelector(
+      "#ow3 > div > div.qCHScd.r14hdb > div.CX8SS > div"
+    ) !== null
+  );
+};
+
+const waitForMainWindow = (cb) => {
+  const key = setInterval(() => {
+    const windowType = checkWindow();
+    if (windowType === "main") {
+      clearInterval(key);
+      console.debug("On main window");
+      cb();
+    }
+  }, 1000);
+};
+
+const main = async () => {
+  initiallyMuteMic();
+  waitForMainWindow(showWarningBorders);
+};
 window.onload = main;

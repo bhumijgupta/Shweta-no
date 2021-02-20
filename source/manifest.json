@@ -8,13 +8,16 @@
   "icons": {
     "128": "icon.png"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "tabs"],
   "options_ui": {
     "chrome_style": true,
     "page": "options.html"
   },
-  "background": {
-    "persistent": false,
-    "scripts": ["background.js"]
-  }
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": ["shweta.js"],
+      "run_at": "document_end"
+    }
+  ]
 }

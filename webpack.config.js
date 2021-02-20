@@ -8,8 +8,8 @@ module.exports = {
   devtool: "source-map",
   stats: "errors-only",
   entry: {
-    background: "./source/background",
     options: "./source/options",
+    shweta: "./source/shweta",
   },
   output: {
     path: path.join(__dirname, "distribution"),

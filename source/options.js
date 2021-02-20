@@ -1,3 +1,4 @@
+import { browser } from "webextension-polyfill-ts";
 import optionsStorage from "./options-storage.js";
 
 optionsStorage.syncForm("#options-form");
@@ -23,5 +24,4 @@ for (const input of rangeInputs) {
   input.addEventListener("input", updateColor);
   input.addEventListener("input", updateInputField);
 }
-
 window.addEventListener("load", updateColor);

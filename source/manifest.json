@@ -8,11 +8,6 @@
   "icons": {
     "128": "icon.png"
   },
-  "permissions": ["storage", "tabs"],
-  "options_ui": {
-    "chrome_style": true,
-    "page": "options.html"
-  },
   "content_scripts": [
     {
       "matches": ["https://meet.google.com/*"],

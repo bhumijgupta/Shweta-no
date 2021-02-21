@@ -28,6 +28,7 @@ module.exports = {
   optimization: {
     minimizer: [
       new TerserPlugin({
+        extractComments: true,
         terserOptions: {
           mangle: false,
           compress: false,

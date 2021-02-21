@@ -2,9 +2,9 @@
 <p align="center"><h1 align="center">Shweta No 🤐</h1>
 <h3 align="center">Extension to automatically mute you when joining meetings and show warning border when unmuted. <br/>All so you don't end up like Shweta :grimacing:</h3>
 
-### Screenshot
+### Demo
 
-![Red border on unmuting](./media/Border.png)
+![Demo on zoom](./media/demo.gif)
 
 ### Features
 

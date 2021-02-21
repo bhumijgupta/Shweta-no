@@ -1,8 +1,8 @@
 {
-  "name": "Awesome Extension",
-  "version": "0.0.0",
-  "description": "An awesome new browser extension",
-  "homepage_url": "https://github.com/awesome-templates/browser-extension-template",
+  "name": "Shweta no",
+  "version": "0.0.1",
+  "description": "Extension to automatically mute you when joining zoom/meet meetings and show red border when you are unmuted",
+  "homepage_url": "https://github.com/bhumijgupta/Shweta-no",
   "manifest_version": 2,
   "minimum_chrome_version": "74",
   "icons": {

@@ -1,7 +1,7 @@
 const { setupStylesheet } = require("./common");
 
 const preSetup = () => {
-  // TODO: Check if joinee, wait for "Waiting for host" or "Waiting for admin to accept" screens
+  // TODO: Check if joinee, wait for "Waiting for host to start" screens
   const joinAudioSelector = ".join-audio-container__btn";
   const joinAudioBtn = document.querySelector(joinAudioSelector);
   if (joinAudioBtn) {
@@ -20,6 +20,15 @@ const preSetup = () => {
         }, 500);
         clearInterval(key);
       } else {
+        // Case: If user is joinee and host has not accepted request to admit user
+        if (
+          window.location.pathname.endsWith("join") &&
+          document.querySelector(waitForHostErrorSelector) !== null
+        ) {
+          clearInterval(key);
+          waitForHostToAdmit(main);
+          return;
+        }
         console.debug("joinByComputer btn disabled");
       }
     }, 1000);
@@ -29,14 +38,20 @@ const preSetup = () => {
 const micBtnSelector =
   "#wc-footer > div > div:nth-child(1) > div.join-audio-container > button";
 
+const waitForHostToAdmit = (cb) => {
+  const key = setInterval(() => {
+    if (document.querySelector(waitForHostErrorSelector) === null) {
+      clearInterval(key);
+      cb();
+    }
+  }, 1000);
+};
+
 const initiallyMuteMic = () => {
   if (checkIsUnmuted()) {
     const micBtn = document.querySelector(micBtnSelector);
-    console.log(micBtn);
     micBtn.click();
     return true;
-  } else {
-    console.log(checkIsUnmuted());
   }
 };
 
@@ -54,6 +69,11 @@ const showWarningBorders = () => {
   setupStylesheet();
   const key = setInterval(() => {
     const target = document.querySelector("#wc-container-left");
+    if (!target) {
+      clearInterval(key);
+      console.debug("ERROR: Cannot find video container");
+      return;
+    }
     switch (checkIsUnmuted()) {
       case true:
         if (!target.classList.contains("warning-border"))
@@ -71,10 +91,25 @@ const showWarningBorders = () => {
 
 const zoomMainRegex = new RegExp("wc/[0-9]{11}/(join|start)");
 
-const main = () => {
+const waitForHostErrorSelector =
+  "#root > div > div.meeting-client > div > div.bhold > div > div.wr-tile > span";
+
+const waitForMain = (cb) => {
   if (zoomMainRegex.test(window.location.pathname)) {
+    const key = setInterval(() => {
+      const target = document.querySelector("#wc-container-left");
+      if (target) {
+        clearInterval(key);
+        cb();
+      }
+    }, 1000);
+  }
+};
+
+const main = () => {
+  waitForMain(() => {
     preSetup();
     showWarningBorders();
-  }
+  });
 };
 window.onload = main;

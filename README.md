@@ -26,6 +26,20 @@
 
 Any platform we are missing? [Tell us here](https://github.com/bhumijgupta/Shweta-no/issues/new)
 
+### Development
+
+```
+npm i
+npm run watch
+```
+
+### Compiling production build
+
+```
+npm i
+npm run build
+```
+
 ### License
 
 [MIT License](./LICENSE)

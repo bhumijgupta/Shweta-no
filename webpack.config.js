@@ -8,7 +8,8 @@ module.exports = {
   devtool: "source-map",
   stats: "errors-only",
   entry: {
-    shweta: "./source/shweta",
+    "shweta-on-meet": "./source/shweta-on-meet.js",
+    "shweta-on-zoom": "./source/shweta-on-zoom.js",
   },
   output: {
     path: path.join(__dirname, "distribution"),

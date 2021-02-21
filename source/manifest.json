@@ -10,8 +10,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://meet.google.com/*"],
-      "js": ["shweta.js"],
+      "matches": ["https://meet.google.com/*", "https://*.zoom.us/wc/*"],
+      "js": ["shweta-on-meet.js", "shweta-on-zoom.js"],
       "run_at": "document_end"
     }
   ]

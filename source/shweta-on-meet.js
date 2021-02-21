@@ -1,9 +1,7 @@
+import { setupStylesheet } from "./common";
 const checkWindow = () => {
   const googleMeetRegex = new RegExp("[a-z]{3}-[a-z]{4}-[a-z]{3}");
-  if (
-    window.location.host === "meet.google.com" &&
-    googleMeetRegex.test(window.location.pathname)
-  ) {
+  if (googleMeetRegex.test(window.location.pathname)) {
     console.debug("On google meet");
     const topRightOptions = document.querySelector("div.Jrb8ue");
     return topRightOptions ? "main" : "lobby";
@@ -41,24 +39,6 @@ const initiallyMuteMic = () => {
   }, 1000);
 };
 
-const setupStylesheet = () => {
-  const head = document.head || document.getElementsByTagName("head")[0];
-  const style = document.createElement("style");
-  const css = `.warning-border {
-      border: 7px solid;
-      border-image-slice: 1;
-      border-image-source: linear-gradient(to right, #f85032, #e73827);
-  }`;
-  style.type = "text/css";
-  if (style.styleSheet) {
-    //   FOR IE8 OR BELOW
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
-  head.appendChild(style);
-};
-
 const showWarningBorders = () => {
   setupStylesheet();
   const key = setInterval(() => {
@@ -93,9 +73,9 @@ const waitForMainWindow = (cb) => {
     }
   }, 1000);
 };
-const main = async () => {
+const main = () => {
   initiallyMuteMic();
   waitForMainWindow(showWarningBorders);
 };
 
-window.onload = main;
+if (window.location.host === "meet.google.com") window.onload = main;

@@ -39,41 +39,41 @@ The template bakes in a pretty basic webpack config, with no transpiling. To set
 
 1. Install Babel packages and respective loader for webpack.
 
-	```sh
-	npm i --save-dev @babel/core @babel/preset-env babel-loader
-	```
+   ```sh
+   npm i --save-dev @babel/core @babel/preset-env babel-loader
+   ```
 
 2. In `webpack.config.js`, add the following rule to process JS files.
 
-	```js
-	module: {
-		rules: [
-			{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				loader: 'babel-loader'
-			}
-		]
-	}
-	```
+   ```js
+   module: {
+     rules: [
+       {
+         test: /\.js$/,
+         exclude: /node_modules/,
+         loader: "babel-loader",
+       },
+     ];
+   }
+   ```
 
 3. Target respective browsers using `.babelrc`.
 
-	```json
-	{
-		"presets": [
-			[
-				"@babel/preset-env",
-				{
-					"targets": {
-						"chrome": "74",
-						"firefox": "67"
-					}
-				}
-			]
-		]
-	}
-	```
+   ```json
+   {
+     "presets": [
+       [
+         "@babel/preset-env",
+         {
+           "targets": {
+             "chrome": "74",
+             "firefox": "67"
+           }
+         }
+       ]
+     ]
+   }
+   ```
 
 #### Extracting CSS
 
@@ -81,72 +81,75 @@ If you will be writing any code that will be importing CSS files from JS files, 
 
 1. Install the webpack plugin.
 
-	```sh
-	npm i --save-dev mini-css-extract-plugin
-	```
+   ```sh
+   npm i --save-dev mini-css-extract-plugin
+   ```
 
 2. Modify the webpack config as mentioned to let this plugin handle CSS imports.
 
-	```js
-	// Import plugin
-	const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+   ```js
+   // Import plugin
+   const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-	// Under `module.rules`
-	{
-		test: /\.css$/,
-		use: [
-			MiniCssExtractPlugin.loader,
-			'css-loader'
-		]
-	}
+   // Under `module.rules`
+   {
+   	test: /\.css$/,
+   	use: [
+   		MiniCssExtractPlugin.loader,
+   		'css-loader'
+   	]
+   }
 
-	// Under `plugins`
-	new MiniCssExtractPlugin({
-		filename: 'content.css'
-	})
-	```
+   // Under `plugins`
+   new MiniCssExtractPlugin({
+   	filename: 'content.css'
+   })
+   ```
 
 #### TypeScript
 
 TypeScript and Babel configs conflict each other, so you can only use one of these configuration types at any point.
 
-1. Install TypeScript and respective loader for webpack
+1.  Install TypeScript and respective loader for webpack
 
-	```sh
-	npm i --save-dev typescript ts-loader @types/firefox-webext-browser
-	```
+    ```sh
+    npm i --save-dev typescript ts-loader @types/firefox-webext-browser
+    ```
 
-2. Use the following webpack rule in the config file.
+2.  Use the following webpack rule in the config file.
 
-	```js
-	{
-		test: /\.(js|ts|tsx)$/,
-		loader: 'ts-loader',
-		exclude: /node_modules/
-	},
-	```
-3. Ask webpack to [resolve ts modules/imports](https://stackoverflow.com/questions/43595555/webpack-cant-resolve-typescript-modules) by adding this to your `webpack.config.js`:
-	```js
-	resolve: {
-		extensions: ['.ts', '.js']
-	}
-	```
+    ```js
+    {
+    	test: /\.(js|ts|tsx)$/,
+    	loader: 'ts-loader',
+    	exclude: /node_modules/
+    },
+    ```
 
-4. Use the following as `tsconfig.json`, uses [sindresorhus/tsconfig][link-tsconfig] (install it as dependency before using).
+3.  Ask webpack to [resolve ts modules/imports](https://stackoverflow.com/questions/43595555/webpack-cant-resolve-typescript-modules) by adding this to your `webpack.config.js`:
 
-	```json
-	{
-		"extends": "@sindresorhus/tsconfig",
-		"compilerOptions": {
-			"target": "esnext",
-			"declaration": false
-		},
-		"include": [
-			"source"
-		]
-	}
-	```
-TypeScript requires additional configuration depending on how you set it up, like [linting][link-xo-ts].
+    ```js
+    resolve: {
+      extensions: [".ts", ".js"];
+    }
+    ```
+
+4.  Use the following as `tsconfig.json`, uses [sindresorhus/tsconfig][link-tsconfig] (install it as dependency before using).
+
+        ```json
+        {
+        	"extends": "@sindresorhus/tsconfig",
+        	"compilerOptions": {
+        		"target": "esnext",
+        		"declaration": false
+        	},
+        	"include": [
+        		"source"
+        	]
+        }
+        ```
+
+    TypeScript requires additional configuration depending on how you set it up, like [linting][link-xo-ts].
 
 ### Auto-syncing options
 
@@ -184,12 +187,8 @@ This browser extension template is released under [CC0](#license) and mentioned 
 
 ## Credits
 
-Extension icon made by [Freepik](https://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0).
+[Extension icon](https://icons8.com/icons/set/no-microphone) made by [Icons8](https://icons8.com).
 
 ## Extensions created using this template
 
 - [notlmn/copy-as-markdown](https://github.com/notlmn/copy-as-markdown) - Browser extension to copy hyperlinks, images, and selected text as Markdown.
-
-## License
-
-[![CC0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/cc-zero.svg)](https://creativecommons.org/publicdomain/zero/1.0/)

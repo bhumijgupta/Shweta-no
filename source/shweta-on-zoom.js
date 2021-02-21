@@ -112,4 +112,4 @@ const main = () => {
     showWarningBorders();
   });
 };
-window.onload = main;
+if (window.location.hostname.endsWith("zoom.us")) window.onload = main;

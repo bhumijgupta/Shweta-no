@@ -30,12 +30,8 @@ module.exports = {
       new TerserPlugin({
         extractComments: true,
         terserOptions: {
-          mangle: false,
-          compress: false,
-          output: {
-            beautify: true,
-            indent_level: 2, // eslint-disable-line camelcase
-          },
+          mangle: true,
+          compress: true,
         },
       }),
     ],
